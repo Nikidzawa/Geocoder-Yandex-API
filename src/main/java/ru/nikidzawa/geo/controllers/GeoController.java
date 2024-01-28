@@ -14,8 +14,8 @@ import ru.nikidzawa.geo.services.GeoService;
 @RequestMapping("/geo/api")
 public class GeoController {
 
-    public static final String getCoordinates = "getCoordinates";
-    public static final String getAddresses = "getAddresses";
+    private static final String getCoordinates = "getCoordinates";
+    private static final String getAddresses = "getAddresses";
 
     @Autowired
     GeoService geoService;

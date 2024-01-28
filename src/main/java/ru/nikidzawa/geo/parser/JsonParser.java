@@ -1,6 +1,5 @@
 package ru.nikidzawa.geo.parser;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -13,7 +12,7 @@ public class JsonParser {
     JsonNode featureMembers;
     int size;
 
-    public JsonParser(String jsonString) throws JsonProcessingException {
+    public JsonParser(String jsonString) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(jsonString);
@@ -27,7 +26,7 @@ public class JsonParser {
         }
     }
 
-    public Address[] getAddresses() throws ParserException {
+    public Address[] getAddresses() {
         try {
             Address[] addresses = new Address[size];
             for (int i = 0; i < size; i++) {
@@ -49,7 +48,7 @@ public class JsonParser {
         }
     }
 
-    public Coordinates[] getCoordinates() throws ParserException {
+    public Coordinates[] getCoordinates() {
         try {
             Coordinates[] coordinates = new Coordinates[size];
             for (int i = 0; i < size; i++) {
