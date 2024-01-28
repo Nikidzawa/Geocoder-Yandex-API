@@ -15,7 +15,6 @@ public class ExceptionController {
                         .message(ex.getMessage())
                         .build());
     }
-
     @ExceptionHandler(ParserException.class)
     public ResponseEntity<Exception> handleJsonException(ParserException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

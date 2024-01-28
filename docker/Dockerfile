@@ -1,4 +1,5 @@
 FROM openjdk:21
+
 ARG GEO=*.jar
 
 COPY ${GEO} geo.jar

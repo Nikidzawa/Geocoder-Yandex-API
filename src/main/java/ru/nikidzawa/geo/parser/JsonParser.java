@@ -14,13 +14,17 @@ public class JsonParser {
     int size;
 
     public JsonParser(String jsonString) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode rootNode = objectMapper.readTree(jsonString);
-        featureMembers = rootNode
-                .path("response")
-                .path("GeoObjectCollection")
-                .path("featureMember");
-        size = featureMembers.size();
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(jsonString);
+            featureMembers = rootNode
+                    .path("response")
+                    .path("GeoObjectCollection")
+                    .path("featureMember");
+            size = featureMembers.size();
+        } catch (Exception ex) {
+            throw new ParserException();
+        }
     }
 
     public Address[] getAddresses() throws ParserException {
@@ -41,7 +45,7 @@ public class JsonParser {
             }
             return addresses;
         } catch (Exception ex) {
-            throw new ParserException("Ошибка парсинга");
+            throw new ParserException();
         }
     }
 
@@ -62,7 +66,7 @@ public class JsonParser {
             }
             return coordinates;
         } catch (Exception ex) {
-            throw new ParserException("Ошибка парсинга");
+            throw new ParserException();
         }
     }
 }
