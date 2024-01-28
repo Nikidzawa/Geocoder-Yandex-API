@@ -14,23 +14,19 @@ import ru.nikidzawa.geo.services.GeoService;
 @RequestMapping("/geo/api")
 public class GeoController {
 
-    public static final String getCoordinates = "getCoordinates";
-    public static final String getAddresses = "getAddresses";
+    private static final String getCoordinates = "getCoordinates";
+    private static final String getAddresses = "getAddresses";
 
     @Autowired
     GeoService geoService;
 
     @GetMapping(getCoordinates)
     public Coordinates[] getCoordinates(@RequestParam("address") String address) {
-        Coordinates[] coordinates = geoService.getCoordinates(address);
-        if (coordinates.length == 0) {throw new NotFoundException();}
-        return coordinates;
+        return geoService.getCoordinates(address);
     }
 
     @GetMapping(getAddresses)
     public Address[] getAddresses(@RequestParam("coordinates") String coordinates) {
-        Address[] addresses = geoService.getAddresses(coordinates);
-        if (addresses.length == 0) {throw new NotFoundException();}
-        return addresses;
+        return geoService.getAddresses(coordinates);
     }
 }

@@ -11,15 +11,15 @@ public class ExceptionController {
     public ResponseEntity<Exception> handleNotFoundException(NotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Exception.builder()
-                        .code(HttpStatus.NOT_FOUND.value())
+                        .status(HttpStatus.NOT_FOUND.toString())
                         .message(ex.getMessage())
                         .build());
     }
     @ExceptionHandler(ParserException.class)
     public ResponseEntity<Exception> handleJsonException(ParserException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(Exception.builder()
-                        .code(HttpStatus.BAD_REQUEST.value())
+                        .status(HttpStatus.CONFLICT.toString())
                         .message(ex.getMessage())
                         .build());
     }
@@ -27,7 +27,7 @@ public class ExceptionController {
     public ResponseEntity<Exception> handleJsonException(YandexApiEx ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body(Exception.builder()
-                        .code(HttpStatus.FORBIDDEN.value())
+                        .status(HttpStatus.FORBIDDEN.toString())
                         .message(ex.getMessage())
                         .build());
     }

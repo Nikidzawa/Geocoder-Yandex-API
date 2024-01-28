@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import ru.nikidzawa.geo.responses.Address;
 import ru.nikidzawa.geo.responses.Coordinates;
+import ru.nikidzawa.geo.responses.exceptions.NotFoundException;
 import ru.nikidzawa.geo.responses.exceptions.ParserException;
 
 @Getter
@@ -13,7 +14,7 @@ public class JsonParser {
     JsonNode featureMembers;
     int size;
 
-    public JsonParser(String jsonString) throws JsonProcessingException {
+    public JsonParser(String jsonString) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(jsonString);
@@ -22,12 +23,13 @@ public class JsonParser {
                     .path("GeoObjectCollection")
                     .path("featureMember");
             size = featureMembers.size();
-        } catch (Exception ex) {
+            if (size == 0) {throw new NotFoundException();}
+        } catch (NullPointerException | JsonProcessingException ex) {
             throw new ParserException();
         }
     }
 
-    public Address[] getAddresses() throws ParserException {
+    public Address[] getAddresses() {
         try {
             Address[] addresses = new Address[size];
             for (int i = 0; i < size; i++) {
@@ -44,12 +46,12 @@ public class JsonParser {
                         .build();
             }
             return addresses;
-        } catch (Exception ex) {
+        } catch (NullPointerException ex) {
             throw new ParserException();
         }
     }
 
-    public Coordinates[] getCoordinates() throws ParserException {
+    public Coordinates[] getCoordinates() {
         try {
             Coordinates[] coordinates = new Coordinates[size];
             for (int i = 0; i < size; i++) {
@@ -65,7 +67,7 @@ public class JsonParser {
                         .build();
             }
             return coordinates;
-        } catch (Exception ex) {
+        } catch (NullPointerException ex) {
             throw new ParserException();
         }
     }

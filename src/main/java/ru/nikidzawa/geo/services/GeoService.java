@@ -23,24 +23,16 @@ public class GeoService {
 
     @Cacheable(value = "geocodeCache", key = "#geocode.toLowerCase()")
     public Address[] getAddresses(String geocode) {
-        try {
-            ResponseEntity<String> responseEntity = getResponse(geocode);
-            JsonParser jsonParser = new JsonParser(responseEntity.getBody());
-            return jsonParser.getAddresses();
-        } catch (JsonProcessingException ex) {
-            throw new ParserException();
-        }
+        ResponseEntity<String> responseEntity = getResponse(geocode);
+        JsonParser jsonParser = new JsonParser(responseEntity.getBody());
+        return jsonParser.getAddresses();
     }
 
     @Cacheable(value = "addressCache", key = "#address.toLowerCase()")
     public Coordinates[] getCoordinates(String address) {
-        try {
-            ResponseEntity<String> responseEntity = getResponse(address);
-            JsonParser jsonParser = new JsonParser(responseEntity.getBody());
-            return jsonParser.getCoordinates();
-        } catch (JsonProcessingException ex) {
-            throw new ParserException();
-        }
+        ResponseEntity<String> responseEntity = getResponse(address);
+        JsonParser jsonParser = new JsonParser(responseEntity.getBody());
+        return jsonParser.getCoordinates();
     }
 
     private static ResponseEntity<String> getResponse(String address) {
@@ -56,7 +48,7 @@ public class GeoService {
             try {
                 JsonNode rootNode = new ObjectMapper().readTree(ex.getResponseBodyAsString());
                 throw new YandexApiEx(rootNode.path("message").asText());
-            } catch (JsonProcessingException exception) {
+            } catch (NullPointerException | JsonProcessingException exception) {
                 throw new ParserException();
             }
         }
