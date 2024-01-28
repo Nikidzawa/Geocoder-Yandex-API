@@ -20,7 +20,7 @@ public class RestApiTest {
 	@Test
 	public void testGetCoordinates() {
 		given()
-				.param("coordinates", "город Сургут, ХМАО-ЮГРА")
+				.param("address", "город Сургут, ХМАО-ЮГРА")
 				.when()
 				.get("/getCoordinates")
 				.then()
@@ -33,7 +33,7 @@ public class RestApiTest {
 	@Test
 	public void testGetAddresses() {
 		given()
-				.param("address", "73.393032 61.241778")
+				.param("coordinates", "73.393032 61.241778")
 				.when()
 				.get("/getAddresses")
 				.then()
