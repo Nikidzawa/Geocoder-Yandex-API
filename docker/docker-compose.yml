@@ -1,6 +1,6 @@
 services:
   geo:
-    image: '27134bc117fc'
+    image: '49778b0fa113'
     container_name: geo
     expose:
       - '8080'
